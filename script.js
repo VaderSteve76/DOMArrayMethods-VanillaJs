@@ -23,7 +23,34 @@ async function getRandomUser() {
   addData(newUser);
 };
 
+// Double everyones money
+function doubleMoney() {
+  data = data.map(user => {
+    return {...user, money: user.money * 2};
+  });
+  updateDOM();
+};
 
+// Sort by richest
+function sortByRichest() {
+  data.sort((a, b) => b.money - a.money);
+  updateDOM();
+};
+
+// Filter only millionaires
+function showMillionaires() {
+  data = data.filter(user => user.money > 1000000);
+  updateDOM();
+};
+
+// Calculate total wealth
+function calculateWealth() {
+  const wealth = data.reduce((acc, user) => (acc += user.money), 0);
+
+  const wealthEl = document.createElement('div');
+  wealthEl.innerHTML = `<h3>Total Waelth: <strong>${formatMoney(wealth)}</strong></h3>`;
+  main.appendChild(wealthEl);
+};
 
 // EventListeners
 addUserBtn.addEventListener('click', getRandomUser);
